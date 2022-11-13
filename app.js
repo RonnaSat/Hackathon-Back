@@ -5,12 +5,14 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
-const auth = require('./Middlewares/auth')
+const auth = require('./Middlewares/auth');
+
 
 //Routes Import
 const testRoutes = require('./Routes/test');
 const loginRoutes = require('./Routes/login');
 const registerRoutes = require('./Routes/register');
+const imageUploadRoutes = require('./Routes/imageUploadTest')
 
 //Midleware
 app.use(express.json());
@@ -22,6 +24,7 @@ app.use(morgan('tiny'));
 app.use('/test', auth, testRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
+app.use('/uploadTest', imageUploadRoutes);
 
 module.exports = app;
 
