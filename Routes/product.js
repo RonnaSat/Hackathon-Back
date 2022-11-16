@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../Models/productModel');
 const imageTobase64 = require('image-to-base64');
-// const imageTemp = require("../uploads/download.png");
 
 let test;
 
@@ -42,15 +41,17 @@ router.post("/addProduct", async (req, res) => {
 
 router.post("/addTest", async (req, res) => {
     try {
-        const productName = "b";
-        const productLocation = "CNX";
+        const productName = "g";
+        const productLocation = "MAYA";
+        const productQuantity = 15;
         const productDescription = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         const productContacts = ["ig", "fb", "phone", "tw"];
-        const productImageBase64 = imgTemp;
+        const productImageBase64 = test;
 
         const product = await Product.create({
             productName,
             productLocation,
+            productQuantity,
             productDescription,
             productContacts,
             productImageBase64
@@ -71,16 +72,14 @@ router.post("/apiTest", async (req, res) => {
     }
 })
 
-router.get("/get/:name", async (req, res) => {
+router.get("/getAll", async (req, res) => {
     try {
-        const productName = req.params.name;
-        const product = await Product.findOne({ productName });
-        const tempObject = {};
-        let base64 = product.productImageBase64.toString('base64');
-        tempObject.data1 = base64;
-        base64 = Buffer.from(base64);
-        tempObject.data2 = base64;
-        res.json(tempObject);
+        const product = await Product.find({ productQuantity: { $gt: 1 } });
+        // let productTemp = { ...product._doc };
+        // let base64 = product.productImageBase64.toString('base64');
+        // productTemp.productImageBase64 = base64;
+        console.log(product)
+        res.status(200).json(product);
     } catch (err) {
         console.log(err);
     }
