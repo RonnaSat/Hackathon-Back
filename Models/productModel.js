@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     productQuantity: { type: Number, default: 0 },
     productDescription: { type: String, default: null },
     productContacts: [String],
-    productImageBase64: { type: Buffer, default: null }
+    productImageBase64: { type: String, default: null }
 });
 
 module.exports = mongoose.model('product', productSchema);
