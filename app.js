@@ -15,6 +15,7 @@ const loginRoutes = require('./Routes/login');
 const registerRoutes = require('./Routes/register');
 const imageUploadRoutes = require('./Routes/imageUploadTest');
 const ProductRoutes = require('./Routes/product');
+const OrderRoutes = require('./Routes/order');
 
 //Midleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/uploadTest', imageUploadRoutes);
 app.use('/productTest', ProductRoutes);
+app.use('/order', OrderRoutes);
 module.exports = app;
 
 //Ref
