@@ -13,14 +13,14 @@ router.post("/", async (req, res) => {
         const user = await User.findOne({ email });
         if (user && (await bcrypt.compare(pwd, user.pwd))) {
             const token = jwt.sign(
-                { user_id: user._id, email },
+                { user },
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: "2h"
                 }
             )
             user.token = token;
-            return res.status(200).json(user);
+            return res.status(200).json(user.token);
         }
         res.status(400).send("Invalid Cred");
     } catch (err) {

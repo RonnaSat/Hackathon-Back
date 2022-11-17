@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
 
     userID: { type: Schema.Types.ObjectId, ref: 'user' },
     productID: { type: Schema.Types.ObjectId, ref: 'product' },
-    productPickTime: { type: String, default: null }
+    productPickTime: { type: String, require: true }
 });
 
 module.exports = mongoose.model('order', orderSchema);

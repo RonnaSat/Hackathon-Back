@@ -7,18 +7,31 @@ const Product = require('../Models/productModel');
 
 router.post("/addOrder", async (req, res) => {
     try {
-        const { email, productName, productPickTime } = req.body;
-        const userInfo = await User.findOne({ email });
-        const productInfo = await Product.findOne({ productName });
-        if (userInfo && productInfo && productPickTime) {
-            const order = await Order.create({
-                userID: userInfo._id,
-                productID: productInfo._id,
-                productPickTime
-            });
-            return res.status(201).json(order);
-        };
+        const { productName, productLocation, productPickTime } = req.body;
+        const userInfoTemp = req.userInfo;
+        const productInfo = await Product.findOne({ productName: productName, productLocation: productLocation });
+        if (!productInfo) return res.status(400).send("Product not found");
+        const orderflag = await Order.findOne({ userID: userInfoTemp._id })
+        if (orderflag) return res.status(400).send("Already add");
+        if (!orderflag) {
+            if (userInfoTemp && productInfo && productPickTime) {
+                const order = await Order.create({
+                    userID: userInfoTemp._id,
+                    productID: productInfo._id,
+                    productPickTime
+                });
+                return res.status(201).json(order);
+            };
+        }
         res.status(400).send("Sth Wrong");
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+router.get("/getOrder", async (req, res) => {
+    try {
+
     } catch (err) {
         console.log(err);
     }

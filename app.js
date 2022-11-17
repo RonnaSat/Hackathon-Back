@@ -18,11 +18,11 @@ const ProductRoutes = require('./Routes/product');
 const OrderRoutes = require('./Routes/order');
 
 //Midleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(express.static('public'));
-app.use(cors());
 app.use(morgan('tiny'));
 
 //Routes
@@ -31,7 +31,7 @@ app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/uploadTest', imageUploadRoutes);
 app.use('/productTest', ProductRoutes);
-app.use('/order', OrderRoutes);
+app.use('/order', auth, OrderRoutes);
 module.exports = app;
 
 //Ref

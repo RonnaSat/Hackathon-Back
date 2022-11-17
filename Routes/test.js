@@ -3,6 +3,6 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    res.send("Test Complete");
+    res.send(req.userInfo);
 });
 module.exports = router;
