@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../Models/orderModel');
-const User = require('../Models/userModel');
 const Product = require('../Models/productModel');
 
 
@@ -31,27 +30,40 @@ router.post("/addOrder", async (req, res) => {
 
 router.get("/getOrder", async (req, res) => {
     try {
-
+        const userInfoTemp = req.userInfo;
+        const orderInfo = await Order.findOne({ userID: userInfoTemp._id });
+        if (!orderInfo) {
+            return res.status(400).send("No Order")
+        } else {
+            await orderInfo.populate('userID');
+            await orderInfo.populate('productID');
+            const orderDetail = {
+                fName: orderInfo.userID.fName,
+                lName: orderInfo.userID.lName,
+                productName: orderInfo.productID.productName,
+                productLocation: orderInfo.productID.productLocation,
+                productPickTime: orderInfo.productPickTime
+            }
+            return res.status(200).json(orderDetail)
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
+router.delete("/deleteOrder", async (req, res) => {
+    try {
+        const userInfoTemp = req.userInfo;
+        const orderInfo = await Order.findOne({ userID: userInfoTemp._id });
+        if (!orderInfo) {
+            return res.status(400).send("No Order");
+        } else {
+            await Order.findByIdAndDelete(orderInfo._id);
+            return res.status(410).send('Deleted')
+        }
     } catch (err) {
         console.log(err);
     }
 })
 
-// router.get("/getTest", async (req, res) => {
-//     try {
-//         const { email } = req.body;
-//         const userInfo = await User.findOne({ email });
-//         const userID = userInfo._id;
-//         const order = await Order.findOne({ userinfo: userID });
-//         console.log(order);
-//         const
-//         const orderDetail ={
-
-//         }
-//         return res.status(200).json(order);
-//     } catch (err) {
-//         console.log(err);
-//     }
-// });
 
 module.exports = router;
