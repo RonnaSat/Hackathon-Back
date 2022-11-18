@@ -13,7 +13,7 @@ var upload = multer();
 const testRoutes = require('./Routes/test');
 const loginRoutes = require('./Routes/login');
 const registerRoutes = require('./Routes/register');
-const imageUploadRoutes = require('./Routes/imageUploadTest');
+// const imageUploadRoutes = require('./Routes/imageUploadTest');
 const ProductRoutes = require('./Routes/product');
 const OrderRoutes = require('./Routes/order');
 
@@ -29,8 +29,8 @@ app.use(morgan('tiny'));
 app.use('/test', auth, testRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
-app.use('/uploadTest', imageUploadRoutes);
-app.use('/productTest', ProductRoutes);
+// app.use('/uploadTest', imageUploadRoutes);
+app.use('/product', auth, ProductRoutes);
 app.use('/order', auth, OrderRoutes);
 module.exports = app;
 
