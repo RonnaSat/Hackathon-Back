@@ -27,7 +27,7 @@ app.use(morgan('tiny'));
 
 //Routes
 app.use('/test', auth, testRoutes);
-app.use('/register', registerRoutes);
+app.use('/userRegister', registerRoutes);
 app.use('/userLogin', loginRoutes);
 // app.use('/uploadTest', imageUploadRoutes);
 app.use('/product', ProductRoutes);

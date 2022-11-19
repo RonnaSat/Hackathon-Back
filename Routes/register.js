@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
         );
         user.token = token;
 
-        res.status(201).json(user);
+        res.status(201).send("Created New Account")
     } catch (err) {
         console.log(err);
     }
