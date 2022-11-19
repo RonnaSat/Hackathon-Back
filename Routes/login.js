@@ -7,8 +7,9 @@ const jwt = require('jsonwebtoken');
 router.post("/", async (req, res) => {
     try {
         const { email, pwd } = req.body;
+        console.log(req.body)
         if (!(email && pwd)) {
-            return res.status(400).send("All input is required");
+            return res.status(400).json({ msg: "Invalid Username and Password" });
         }
         const user = await User.findOne({ email });
         if (user && (await bcrypt.compare(pwd, user.pwd))) {

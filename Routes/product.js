@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../Models/productModel');
+const auth = require('../Middlewares/auth');
 
 
-router.post("/addProduct", async (req, res) => {
+router.post("/addProduct", auth, async (req, res) => {
     try {
         const { productName, productLocation, productQuantity, productDescription, productContacts, productImageBase64 } = req.body;
 
@@ -42,7 +43,7 @@ router.get("/getAll", async (req, res) => {
 })
 
 
-router.put("/updateData", async (req, res) => {
+router.put("/updateData", auth, async (req, res) => {
     try {
         const { _id, productName, productLocation, productQuantity, productDescription, productContacts, productImageBase64 } = req.body;
         if (!(productName && productLocation && productQuantity && productDescription && productContacts && productImageBase64)) {
