@@ -79,5 +79,16 @@ router.put("/updateData", auth, async (req, res) => {
     }
 })
 
+router.delete('/:id', async (req, res) => {
+
+        const productId = req.params.id;
+        console.log(productId);
+        await Product.findByIdAndDelete(productId);
+        return res.status(204).send('Deleted')
+        // const productIndex = Product.findById(productId);
+        // console.log(productIndex._doc);
+        // Product.splice(productIndex, 1);
+    
+});
 
 module.exports = router;
