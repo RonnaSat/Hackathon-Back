@@ -37,6 +37,10 @@ router.get("/getOrder", async (req, res) => {
         } else {
             await orderInfo.populate('userID');
             await orderInfo.populate('productID');
+            if (!orderInfo?.userID?.fName || !orderInfo?.productID?.productName) {
+                await Order.findByIdAndDelete(orderInfo._id);
+                return res.status(404).send('Order failed')
+            }
             const orderDetail = {
                 fName: orderInfo.userID.fName,
                 lName: orderInfo.userID.lName,
@@ -58,7 +62,7 @@ router.delete("/deleteOrder", async (req, res) => {
             return res.status(400).send("No Order");
         } else {
             await Order.findByIdAndDelete(orderInfo._id);
-            return res.status(410).send('Deleted')
+            return res.status(204).send('Deleted')
         }
     } catch (err) {
         console.log(err);

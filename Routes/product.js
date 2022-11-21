@@ -34,7 +34,7 @@ router.post("/addProduct", auth, async (req, res) => {
 
 router.get("/getAll", async (req, res) => {
     try {
-        const product = await Product.find({ productQuantity: { $gt: 1 } });
+        const product = await Product.find({ productQuantity: { $gt: 0 } });
         if (!product) return res.status(404).send("No prduct");
         res.status(200).json(product);
     } catch (err) {
@@ -79,16 +79,16 @@ router.put("/updateData", auth, async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
 
-        const productId = req.params.id;
-        console.log(productId);
-        await Product.findByIdAndDelete(productId);
-        return res.status(204).send('Deleted')
-        // const productIndex = Product.findById(productId);
-        // console.log(productIndex._doc);
-        // Product.splice(productIndex, 1);
-    
+    const productId = req.params.id;
+    console.log(productId);
+    await Product.findByIdAndDelete(productId);
+    return res.status(204).send('Deleted')
+    // const productIndex = Product.findById(productId);
+    // console.log(productIndex._doc);
+    // Product.splice(productIndex, 1);
+
 });
 
 module.exports = router;
