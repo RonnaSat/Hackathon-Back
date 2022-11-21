@@ -41,6 +41,15 @@ router.get("/getAll", async (req, res) => {
         console.log(err);
     }
 })
+router.get("/getByName/:productName", async (req, res) => {
+    try {
+        const product = await Product.find({ productName: req.params.productName });
+        if (!product) return res.status(404).send("No prduct");
+        res.status(200).json(product);
+    } catch {
+        console.log(e)
+    }
+})
 
 
 router.put("/updateData", auth, async (req, res) => {
