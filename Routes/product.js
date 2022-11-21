@@ -7,7 +7,7 @@ const auth = require('../Middlewares/auth');
 router.post("/addProduct", auth, async (req, res) => {
     try {
         const { productName, productLocation, productQuantity, productDescription, productContacts, productImageBase64 } = req.body;
-
+        console.log(req.body)
         if (!(productName && productLocation && productQuantity && productDescription && productContacts && productImageBase64)) {
             return res.status(400).send("All input are required");
         }

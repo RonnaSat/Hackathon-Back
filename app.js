@@ -6,8 +6,8 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 const auth = require('./Middlewares/auth');
-var multer = require('multer');
-var upload = multer();
+// var multer = require('multer');
+// var upload = multer();
 
 //Routes Import
 const testRoutes = require('./Routes/test');
@@ -21,7 +21,7 @@ const OrderRoutes = require('./Routes/order');
 app.use(cors());
 app.use(express.json({ limit: '150mb' }));
 app.use(express.urlencoded({ limit: '150mb', extended: true }));
-app.use(upload.array());
+// app.use(upload.array());
 app.use(express.static('public'));
 app.use(morgan('tiny'));
 
