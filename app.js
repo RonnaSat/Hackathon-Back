@@ -16,6 +16,7 @@ const registerRoutes = require('./Routes/register');
 // const imageUploadRoutes = require('./Routes/imageUploadTest');
 const ProductRoutes = require('./Routes/product');
 const OrderRoutes = require('./Routes/order');
+const reviewRoutes = require('./Routes/review')
 
 //Midleware
 app.use(cors());
@@ -32,6 +33,7 @@ app.use('/userLogin', loginRoutes);
 // app.use('/uploadTest', imageUploadRoutes);
 app.use('/product', ProductRoutes);
 app.use('/order', auth, OrderRoutes);
+app.use('/review', reviewRoutes);
 module.exports = app;
 
 //Ref
