@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+
 
 const userSchema = new mongoose.Schema({
     fName: { type: String, require: true },
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     concentration: { type: Number, require: true },
     price: { type: Number, require: true },
     comment: { type: String, default: "" },
-    productID: { type: Schema.Types.ObjectId, ref: 'product' }
+    productName: { type: String, require: true }
 });
 
 module.exports = mongoose.model('review', userSchema);
