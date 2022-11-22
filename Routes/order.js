@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../Models/orderModel');
 const Product = require('../Models/productModel');
-
+const auth = require('../Middlewares/auth');
 
 router.post("/addOrder", async (req, res) => {
     try {
@@ -28,6 +28,23 @@ router.post("/addOrder", async (req, res) => {
     }
 })
 
+router.put("/updateToReview/", auth, async (req, res) => {
+    try {
+        const { _id } = req.body;
+        const orderInfo = await Order.findById({ _id });
+        if (!orderInfo) {
+            return res.status(400).send("No Order")
+        } else {
+            orderInfo.status = '1';
+            await orderInfo.save();
+            return res.status(201).send('Update to review')
+        }
+        res.status(404).send('Update failed')
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 router.get("/getOrder", async (req, res) => {
     try {
         const userInfoTemp = req.userInfo;
@@ -42,6 +59,8 @@ router.get("/getOrder", async (req, res) => {
                 return res.status(404).send('Order failed')
             }
             const orderDetail = {
+                _id: orderInfo._id,
+                orderStatus: orderInfo.status,
                 fName: orderInfo.userID.fName,
                 lName: orderInfo.userID.lName,
                 productName: orderInfo.productID.productName,
@@ -50,6 +69,7 @@ router.get("/getOrder", async (req, res) => {
                 productImageBase64: orderInfo.productID.productImageBase64,
                 productLocation: orderInfo.productID.productLocation,
                 productPickTime: orderInfo.productPickTime
+
             }
             return res.status(200).json(orderDetail)
         }
