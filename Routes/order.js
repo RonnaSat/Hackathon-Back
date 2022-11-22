@@ -45,6 +45,9 @@ router.get("/getOrder", async (req, res) => {
                 fName: orderInfo.userID.fName,
                 lName: orderInfo.userID.lName,
                 productName: orderInfo.productID.productName,
+                productDescription: orderInfo.productID.productDescription,
+                productContacts: orderInfo.productID.productContacts,
+                productImageBase64: orderInfo.productID.productImageBase64,
                 productLocation: orderInfo.productID.productLocation,
                 productPickTime: orderInfo.productPickTime
             }
