@@ -68,8 +68,11 @@ router.put("/updateData", auth, async (req, res) => {
             return res.status(400).send("All input are required");
         }
         const oldProduct = await Product.findOne({ _id });
+        const conflict = await Product.findOne({ productName, productLocation, _id: { $ne: _id } });
         if (!oldProduct) {
-            return res.status(404).send("No prduct");
+            return res.status(404).send("No product");
+        } else if (conflict) {
+            return res.status(409).send("Product conflict");
         } else {
             const newData = {
                 productName,
