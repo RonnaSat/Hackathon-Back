@@ -43,6 +43,18 @@ router.get('/UserGetAllID', async (req, res) => {
     }
 })
 
+router.get('/AdminGetAllID', async (req, res) => {
+    try {
+        const product = await Product.find().select({ _id: 1 });;
+        if (!product) return res.status(404).send("No prduct");
+        const prods = product.map(prod => prod._id)
+
+        res.status(200).json(prods);
+    } catch (err) {
+        console.log(err);
+    }
+})
+
 router.get("/getAll", async (req, res) => {
     try {
         const product = await Product.find({ productQuantity: { $gt: 0 } });
@@ -73,15 +85,16 @@ router.get("/getByName/:productName", async (req, res) => {
     }
 })
 
-router.get("/getByID/:ID", auth, async (req, res) => {
+router.get("/getByID/:ID", async (req, res) => {
     try {
-        const product = await Product.findById(req.params.productName);
+        const product = await Product.findById(req.params.ID);
         if (!product) return res.status(404).send("No prduct");
         res.status(200).json(product);
     } catch {
         console.log(e)
     }
 })
+
 
 router.put("/updateData", auth, async (req, res) => {
     try {
