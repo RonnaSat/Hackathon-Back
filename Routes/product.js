@@ -31,6 +31,17 @@ router.post("/addProduct", auth, async (req, res) => {
     }
 })
 
+router.get('/UserGetAllID', async (req, res) => {
+    try {
+        const product = await Product.find({ productQuantity: { $gt: 0 } }).select({ _id: 1 });;
+        if (!product) return res.status(404).send("No prduct");
+        const prods = product.map(prod => prod._id)
+
+        res.status(200).json(prods);
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 router.get("/getAll", async (req, res) => {
     try {
