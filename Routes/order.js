@@ -19,6 +19,9 @@ router.post("/addOrder", async (req, res) => {
                     productID: productInfo._id,
                     productPickTime
                 });
+                const newProdQuantity = (productInfo.productQuantity) - 1;
+                await productInfo.update({ productQuantity: newProdQuantity });
+
                 return res.status(201).json(order);
             };
         }
@@ -84,6 +87,11 @@ router.delete("/deleteOrder", async (req, res) => {
         if (!orderInfo) {
             return res.status(400).send("No Order");
         } else {
+            if (orderInfo.productID) {
+                const productInfo = await Product.findById(orderInfo.productID);
+                const newProdQuantity = (productInfo.productQuantity) + 1;
+                await productInfo.update({ productQuantity: newProdQuantity });
+            }
             await Order.findByIdAndDelete(orderInfo._id);
             return res.status(204).send('Deleted')
         }
